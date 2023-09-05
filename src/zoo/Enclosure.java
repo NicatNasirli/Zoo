@@ -20,6 +20,7 @@ public class Enclosure {
         System.out.print("Animal name:");
         String animalName = scanner.nextLine();
         String info = "Animal do not found!";
+
         switch (enclosureName.toLowerCase()) {
             case "lions":
                 if(Objects.nonNull(lions.get(animalName))){
