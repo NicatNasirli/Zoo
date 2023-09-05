@@ -12,6 +12,7 @@ public class Enclosure {
     public static void addAnimal(Hashtable<String,Animal> animals,String key, Animal animal) {
         animals.put(key,animal);
     }
+
     public static void removeAnimal() {
         Scanner scanner = new Scanner(System.in);
         ZooUtil.enclosures();
