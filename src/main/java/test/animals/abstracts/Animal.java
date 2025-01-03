@@ -1,11 +1,13 @@
-package test.animals;
+package test.animals.abstracts;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public abstract class Animal {
     private int age;

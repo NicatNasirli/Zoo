@@ -1,5 +1,8 @@
-package test.animals;
+package test.animals.abstracts;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public abstract class BigCat extends Animal {
     private static final String[] eats = {"Steak","Celery"};
 

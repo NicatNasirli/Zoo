@@ -1,4 +1,4 @@
-package test.animals;
+package test.animals.abstracts;
 
 public abstract class Ape extends Animal {
     private static final String[] eats = {"Fruit", "Ice-cream"};
