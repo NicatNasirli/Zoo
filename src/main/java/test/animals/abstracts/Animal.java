@@ -10,6 +10,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 @Data
 public abstract class Animal {
+    private int id;
     private int age;
     private char gender;
     private String[] eats;
@@ -29,11 +30,13 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return "{"  + age +
-                "," + gender +
-                "," + Arrays.toString(eats) +
-                "," + health +
-                "," + lifeExpectancy +
-                '}';
+        return "{" +
+                "\n id: "  + id +
+                "\n age: " + age +
+                "\n gender: " + gender +
+                "\n eats: " + Arrays.toString(eats) +
+                "\n health: " + health +
+                "\n life expectancy: " + lifeExpectancy +
+                "}";
     }
 }
