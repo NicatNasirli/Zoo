@@ -18,20 +18,22 @@ public abstract class Animal {
     private int lifeExpectancy;
 
 
-    public boolean canEat(String food){
-        for (String f: this.eats){
-            if (f.equals(food)){
+    public boolean canEat(String food) {
+        for (String f : this.eats) {
+            if (f.equals(food)) {
                 return true;
             }
         }
         return false;
     }
+
+
     public abstract boolean aMonthPasses();
 
     @Override
     public String toString() {
         return "{" +
-                "\n id: "  + id +
+                "\n id: " + id +
                 "\n age: " + age +
                 "\n gender: " + gender +
                 "\n eats: " + Arrays.toString(eats) +

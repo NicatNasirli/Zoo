@@ -13,13 +13,13 @@ public class Enclosure {
     private int waste;
     private HashMap<Integer, Animal> animals;
 
-    public Enclosure(int id, int waste) {
+    public Enclosure(int id) {
         this.id = id;
-        this.waste = waste;
+        this.waste = 0;
         this.animals = new HashMap<>();
     }
 
-    private boolean enclosureFull() {
+    private boolean ifEnclosureFull() {
         return animals.size() >= 4;
     }
 
