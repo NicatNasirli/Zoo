@@ -10,12 +10,7 @@ public class Main {
         Animal lion2 = new Lion(2,1,'M',10);
         Animal lion3 = new Lion(3,1,'M',10);
         Animal lion4 = new Lion(4,1,'M',10);
-        Enclosure enclosure = new Enclosure(1,0,4);
-        enclosure.putAnimal(lion);
-        enclosure.putAnimal(lion2);
-        enclosure.putAnimal(lion3);
-        enclosure.putAnimal(lion4);
-
+        Enclosure enclosure = new Enclosure(1,0);
         System.out.println(enclosure.getAnimals());
     }
 }
