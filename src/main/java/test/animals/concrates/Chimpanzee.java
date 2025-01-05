@@ -1,6 +1,7 @@
 package test.animals.concrates;
 
 import test.animals.abstracts.Ape;
+import test.utils.Food;
 
 public class Chimpanzee extends Ape {
     private static final int lifeExpectancy = 24;
@@ -10,7 +11,7 @@ public class Chimpanzee extends Ape {
     }
 
     @Override
-    public boolean aMonthPasses() {
+    public boolean aMonthPasses(Food food) {
         return false;
     }
 }

@@ -1,6 +1,7 @@
 package test.animals.concrates;
 
 import test.animals.abstracts.BigCat;
+import test.utils.Food;
 
 public class Tiger extends BigCat {
     private static final int lifeExpectancy = 24;
@@ -11,7 +12,7 @@ public class Tiger extends BigCat {
     }
 
     @Override
-    public boolean aMonthPasses() {
+    public boolean aMonthPasses(Food food) {
         return false;
     }
 }

@@ -6,6 +6,8 @@ import test.buildings.Enclosure;
 import test.buildings.FoodStore;
 import test.buildings.Zoo;
 import test.utils.Food;
+import test.zookeepers.PhysioZookeeper;
+import test.zookeepers.Zookeeper;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,6 +29,8 @@ public class Main {
         foodStore.removeFood(celery,2);
         foodStore.addFood(celery,4);
         System.out.println(foodStore.getFoods());
+
+        Zookeeper zookeeper = new PhysioZookeeper(1);
     }
 
 }

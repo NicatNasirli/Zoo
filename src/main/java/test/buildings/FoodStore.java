@@ -1,6 +1,5 @@
 package test.buildings;
 
-import lombok.Data;
 import lombok.Getter;
 import test.utils.Food;
 import test.utils.FoodContainer;
