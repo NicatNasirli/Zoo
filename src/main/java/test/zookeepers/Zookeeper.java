@@ -1,6 +1,7 @@
 package test.zookeepers;
 
 import lombok.Data;
+import test.animals.abstracts.Animal;
 import test.buildings.Enclosure;
 import test.buildings.FoodStore;
 import test.utils.Food;
@@ -13,13 +14,11 @@ import java.util.Set;
 public class Zookeeper {
     private int id;
 
-    private final FoodStore foodStore;
-    private final Enclosure enclosure;
+    private HashMap<Integer, Animal> animals;
 
-    public Zookeeper(int id, FoodStore foodStore, Enclosure enclosure) {
+    public Zookeeper(int id) {
         this.id = id;
-        this.foodStore = foodStore;
-        this.enclosure = enclosure;
+        this.animals = new HashMap<>();
     }
 
     public void stroke() {
@@ -30,34 +29,42 @@ public class Zookeeper {
 
     }
 
-    public boolean ifThereIsFood(Food food) {
-        int size = this.foodStore.getFoods().get(food.getName()).getSize();
+    public boolean ifThereIsFood(FoodStore foodStore, Food food) {
+        int size = foodStore.getFoods().get(food.getName()).getSize();
         return size > 0;
     }
 
-    public void feedAnimal(Food food) {
-        if (ifThereIsFood(food)) {
-            this.foodStore.removeFood(food, 1);
+    public void feedAnimal(FoodStore foodStore, Food food) {
+        if (ifThereIsFood(foodStore, food)) {
+            foodStore.removeFood(food, 1);
         } else System.out.println("No foods found");
     }
 
-    public void addFoodToEachContainer(){
-        HashMap<String,FoodContainer> foods = this.foodStore.getFoods();
+    public void addFoodToEachContainer(FoodStore foodStore) {
+        HashMap<String, FoodContainer> foods = foodStore.getFoods();
         Set<String> keys = foods.keySet();
-        for (String key : keys){
+        for (String key : keys) {
             foods.get(key).setSize(foods.get(key).getSize() + 1);
         }
     }
 
-    public void removeWasteFromEnclosure(){
-        if (this.enclosure.getWaste() >= 1){
-            this.enclosure.setWaste(this.enclosure.getWaste() - 1);
+    public void removeWasteFromEnclosure(Enclosure enclosure) {
+        if (enclosure.getWaste() >= 1) {
+            enclosure.setWaste(enclosure.getWaste() - 1);
         }
     }
 
-    public boolean aMonthPasses() {
-        addFoodToEachContainer();
-        removeWasteFromEnclosure();
+    public void assignAnimal(Animal animal) {
+        this.animals.put(animal.getId(), animal);
+    }
+
+    public void removeAnimal(Animal animal) {
+        this.animals.remove(animal.getId());
+    }
+
+    public boolean aMonthPasses(FoodStore foodStore, Enclosure enclosure) {
+        addFoodToEachContainer(foodStore);
+        removeWasteFromEnclosure(enclosure);
         return true;
     }
 }

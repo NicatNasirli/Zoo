@@ -18,7 +18,7 @@ public abstract class Ape extends Animal {
     public boolean aMonthPasses(Zookeeper zookeeper, Enclosure enclosure, FoodStore foodStore) {
         if (ifAlive()) {
             Food food = foodStore.getFoods().get("Ice-cream").getFood();
-            zookeeper.feedAnimal(food);
+            zookeeper.feedAnimal(foodStore,food);
             enclosure.setWaste(enclosure.getWaste() + eat(food));
             this.setMonth(this.getMonth() + 1);
             if (this.getMonth() == 12){
