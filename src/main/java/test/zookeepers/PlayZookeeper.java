@@ -1,12 +1,13 @@
 package test.zookeepers;
 
+import test.buildings.Enclosure;
 import test.buildings.FoodStore;
 
 public class PlayZookeeper extends Zookeeper {
 
 
-    public PlayZookeeper(int id, FoodStore foodStore) {
-        super(id, foodStore);
+    public PlayZookeeper(int id, FoodStore foodStore, Enclosure enclosure) {
+        super(id, foodStore, enclosure);
     }
 
     public void watchAFilm() {
