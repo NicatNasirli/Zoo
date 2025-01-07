@@ -2,11 +2,13 @@ package test.buildings;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import test.animals.abstracts.Animal;
 
 import java.util.HashMap;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Enclosure {
     private int id;

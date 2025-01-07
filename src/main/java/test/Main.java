@@ -13,9 +13,11 @@ public class Main {
     public static void main(String[] args) {
         Zoo zoo = new Zoo();
         FoodStore foodStore = new FoodStore();
+        Zookeeper zookeeper1 = new PhysioZookeeper(1,foodStore);
         Animal lion = new Lion(1,1,'M',10);
         Animal lion2 = new Lion(2,1,'M',10);
-        zoo.addEnclosure(new Enclosure(1));
+        Enclosure enclosure1 = new Enclosure(1);
+        zoo.addEnclosure(enclosure1);
         zoo.getEnclosure(1).addAnimal(lion);
         zoo.getEnclosure(1).addAnimal(lion2);
 
@@ -24,13 +26,13 @@ public class Main {
         foodStore.addNewFood(celery);
         foodStore.addNewFood(hay);
 
-        foodStore.addFood(celery,5);
-        foodStore.removeExistedFood(hay);
-        foodStore.removeFood(celery,2);
-        foodStore.addFood(celery,4);
-        System.out.println(foodStore.getFoods());
+        foodStore.addFood(celery,10);
 
-        Zookeeper zookeeper = new PhysioZookeeper(1);
+        for (int i = 0;i < 12;i++){
+            lion.aMonthPasses(zookeeper1,enclosure1,foodStore);
+        }
+
+
     }
 
 }

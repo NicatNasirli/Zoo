@@ -1,18 +1,19 @@
 package test.animals.abstracts;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import test.buildings.Enclosure;
+import test.buildings.FoodStore;
 import test.utils.Food;
+import test.zookeepers.Zookeeper;
 
 import java.util.Arrays;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @RequiredArgsConstructor
 @Data
 public abstract class Animal {
+    private int month;
+
     private int id;
     private int age;
     private char gender;
@@ -21,6 +22,15 @@ public abstract class Animal {
     private int lifeExpectancy;
 
 
+    public Animal(int id, int age, char gender, String[] eats, int health, int lifeExpectancy) {
+        this.id = id;
+        this.age = age;
+        this.gender = gender;
+        this.eats = eats;
+        this.health = health;
+        this.lifeExpectancy = lifeExpectancy;
+        this.month = 0;
+    }
 
     public boolean canEat(Food foodType) {
         for (String food : this.eats) {
@@ -48,7 +58,7 @@ public abstract class Animal {
     }
 
 
-    public abstract boolean aMonthPasses(Food food);
+    public abstract boolean aMonthPasses(Zookeeper zookeeper,Enclosure enclosure, FoodStore foodStore);
 
     @Override
     public String toString() {
