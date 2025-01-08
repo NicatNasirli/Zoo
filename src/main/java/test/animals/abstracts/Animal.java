@@ -22,6 +22,11 @@ public abstract class Animal {
     private int lifeExpectancy;
 
 
+    private Zookeeper zookeeper;
+    private Enclosure enclosure;
+
+
+
     public Animal(int id, int age, char gender, String[] eats, int health, int lifeExpectancy) {
         this.id = id;
         this.age = age;
@@ -58,7 +63,7 @@ public abstract class Animal {
     }
 
 
-    public abstract boolean aMonthPasses(Zookeeper zookeeper,Enclosure enclosure, FoodStore foodStore);
+    public abstract boolean aMonthPasses(FoodStore foodStore);
 
     @Override
     public String toString() {

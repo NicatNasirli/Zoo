@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import test.buildings.Enclosure;
 import test.buildings.FoodStore;
 import test.utils.Food;
-import test.zookeepers.Zookeeper;
 
 @RequiredArgsConstructor
 public abstract class BigCat extends Animal {
@@ -17,11 +16,11 @@ public abstract class BigCat extends Animal {
 
 
     @Override
-    public boolean aMonthPasses(Zookeeper zookeeper, Enclosure enclosure, FoodStore foodStore) {
+    public boolean aMonthPasses(FoodStore foodStore) {
         if (ifAlive()) {
             Food food = foodStore.getFoods().get("Celery").getFood();
-            zookeeper.feedAnimal(foodStore, food);
-            enclosure.setWaste(enclosure.getWaste() + eat(food));
+            this.getZookeeper().feedAnimal(foodStore, food);
+            this.getEnclosure().setWaste(this.getEnclosure().getWaste() + eat(food));
             this.setMonth(this.getMonth() + 1);
             if (this.getMonth() == 12) {
                 this.grow();

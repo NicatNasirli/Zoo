@@ -56,11 +56,14 @@ public class Zookeeper {
 
     public void assignAnimal(Animal animal) {
         this.animals.put(animal.getId(), animal);
+        animal.setZookeeper(this);
     }
 
     public void removeAnimal(Animal animal) {
         this.animals.remove(animal.getId());
+        animal.setZookeeper(null);
     }
+
 
     public boolean aMonthPasses(FoodStore foodStore, Enclosure enclosure) {
         addFoodToEachContainer(foodStore);

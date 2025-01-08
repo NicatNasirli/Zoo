@@ -40,10 +40,6 @@ public class Zoo {
         this.zookeepers.remove(zookeeper.getId());
     }
 
-    public void assignZookeeper(Zookeeper zookeeper, Animal animal){
-
-    }
-
     public Zookeeper getAnimalZookeeper(Animal animal){
         Set<Integer> zookeeperKeys = this.zookeepers.keySet();
 
@@ -69,8 +65,7 @@ public class Zoo {
             Set<Integer> animalKeys = enclosure.getAnimals().keySet();
             for (int animalKey : animalKeys) {
                 Animal animal = enclosure.getAnimals().get(animalKey);
-                Zookeeper zookeeper = getAnimalZookeeper(animal);
-                animal.aMonthPasses(zookeeper, enclosure,this.foodStore);
+                animal.aMonthPasses(this.foodStore);
             }
         }
         return true;

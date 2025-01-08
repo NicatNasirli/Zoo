@@ -27,10 +27,12 @@ public class Enclosure {
 
     public void addAnimal(Animal animal) {
         this.animals.put(animal.getId(), animal);
+        animal.setEnclosure(this);
     }
 
     public void removeAnimal(Animal animal) {
         this.animals.remove(animal.getId());
+        animal.setEnclosure(null);
     }
 
     public void addWaste(int waste) {
