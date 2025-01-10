@@ -18,7 +18,7 @@ public class Tiger extends BigCat {
     }
 
     @Override
-    public boolean aMonthPasses(Zookeeper zookeeper, Enclosure enclosure, FoodStore foodStore) {
-        return super.aMonthPasses(zookeeper, enclosure, foodStore);
+    public boolean aMonthPasses(FoodStore foodStore) {
+        return super.aMonthPasses(foodStore);
     }
 }

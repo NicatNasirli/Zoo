@@ -34,10 +34,13 @@ public class Zookeeper {
         return size > 0;
     }
 
-    public void feedAnimal(FoodStore foodStore, Food food) {
+    public int feedAnimal(FoodStore foodStore, Food food, Animal animal) {
         if (ifThereIsFood(foodStore, food)) {
             foodStore.removeFood(food, 1);
+            animal.eat(food);
+            return food.getWaste();
         } else System.out.println("No foods found");
+        return 0;
     }
 
     public void addFoodToEachContainer(FoodStore foodStore) {

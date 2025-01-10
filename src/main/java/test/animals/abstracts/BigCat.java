@@ -19,8 +19,8 @@ public abstract class BigCat extends Animal {
     public boolean aMonthPasses(FoodStore foodStore) {
         if (ifAlive()) {
             Food food = foodStore.getFoods().get("Celery").getFood();
-            this.getZookeeper().feedAnimal(foodStore, food);
-            this.getEnclosure().setWaste(this.getEnclosure().getWaste() + eat(food));
+            int waste = this.getZookeeper().feedAnimal(foodStore, food, this);
+            this.getEnclosure().setWaste(this.getEnclosure().getWaste() + waste);
             this.setMonth(this.getMonth() + 1);
             if (this.getMonth() == 12) {
                 this.grow();
