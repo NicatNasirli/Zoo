@@ -1,5 +1,7 @@
 package test.zookeepers;
 
+import test.animals.abstracts.Animal;
+
 public class PlayZookeeper extends Zookeeper {
 
 
@@ -7,15 +9,18 @@ public class PlayZookeeper extends Zookeeper {
         super(id);
     }
 
-    public void watchAFilm() {
-
+    public void watchAFilm(Animal animal) {
+        animal.setHealth(animal.getHealth() + 2);
+        setMaxHealth(animal);
     }
 
-    public void playChase() {
-
+    public void playChase(Animal animal) {
+        animal.setHealth(animal.getHealth() + 4);
+        setMaxHealth(animal);
     }
 
-    public void painting() {
-
+    public void painting(Animal animal) {
+        animal.setHealth(animal.getHealth() + 4);
+        setMaxHealth(animal);
     }
 }

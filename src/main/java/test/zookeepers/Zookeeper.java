@@ -21,12 +21,14 @@ public class Zookeeper {
         this.animals = new HashMap<>();
     }
 
-    public void stroke() {
-
+    public void stroke(Animal animal) {
+        animal.setHealth(animal.getHealth() + 2);
+        setMaxHealth(animal);
     }
 
-    public void hug() {
-
+    public void hug(Animal animal) {
+        animal.setHealth(animal.getHealth() + 3);
+        setMaxHealth(animal);
     }
 
     public boolean ifThereIsFood(FoodStore foodStore, Food food) {
@@ -72,5 +74,11 @@ public class Zookeeper {
         addFoodToEachContainer(foodStore);
         removeWasteFromEnclosure(enclosure);
         return true;
+    }
+
+    public void setMaxHealth(Animal animal){
+        if (animal.getHealth() >= 10){
+            animal.setHealth(10);
+        }
     }
 }

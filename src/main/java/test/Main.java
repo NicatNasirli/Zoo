@@ -9,7 +9,7 @@ import test.utils.Food;
 import test.zookeepers.PhysioZookeeper;
 import test.zookeepers.Zookeeper;
 
-public class Main {
+public class Main extends Thread{
     public static void main(String[] args) {
         Zoo zoo = new Zoo();
         FoodStore foodStore = zoo.getFoodStore();
@@ -28,10 +28,6 @@ public class Main {
         foodStore.addNewFood(hay);
 
         foodStore.addFood(celery,10);
-
-        for (int i = 0;i < 12;i++){
-            zoo.aMonthPasses();
-        }
 
     }
 
