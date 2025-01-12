@@ -67,13 +67,11 @@ public abstract class Animal {
 
     @Override
     public String toString() {
-        return "{" +
-                "\n id: " + id +
-                "\n age: " + age +
-                "\n gender: " + gender +
-                "\n eats: " + Arrays.toString(eats) +
-                "\n health: " + health +
-                "\n life expectancy: " + lifeExpectancy +
-                "}";
+        return "\n id: " + id +
+                ", age: " + age +
+                ", gender: " + gender +
+                ", eats: " + Arrays.toString(eats) +
+                ", health: " + health +
+                ", life expectancy: " + lifeExpectancy;
     }
 }

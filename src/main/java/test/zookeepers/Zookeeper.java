@@ -4,6 +4,7 @@ import lombok.Data;
 import test.animals.abstracts.Animal;
 import test.buildings.Enclosure;
 import test.buildings.FoodStore;
+import test.utils.CustomException;
 import test.utils.Food;
 import test.utils.FoodContainer;
 
@@ -41,8 +42,7 @@ public class Zookeeper {
             foodStore.removeFood(food, 1);
             animal.eat(food);
             return food.getWaste();
-        } else System.out.println("No foods found");
-        return 0;
+        } else throw new CustomException("No food found!");
     }
 
     public void addFoodToEachContainer(FoodStore foodStore) {
