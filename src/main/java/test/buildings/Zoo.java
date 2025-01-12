@@ -32,29 +32,55 @@ public class Zoo {
         return this.enclosures.get(id);
     }
 
-    public void addZookeeper(Zookeeper zookeeper){
-        this.zookeepers.put(zookeeper.getId(),zookeeper);
+    public void addZookeeper(Zookeeper zookeeper) {
+        this.zookeepers.put(zookeeper.getId(), zookeeper);
     }
 
-    public void removeZookeeper(Zookeeper zookeeper){
+    public void removeZookeeper(Zookeeper zookeeper) {
         this.zookeepers.remove(zookeeper.getId());
     }
 
-    public Zookeeper getAnimalZookeeper(Animal animal){
+    public Zookeeper getAnimalZookeeper(Animal animal) {
         Set<Integer> zookeeperKeys = this.zookeepers.keySet();
 
-        for (int zookeeperKey : zookeeperKeys){
+        for (int zookeeperKey : zookeeperKeys) {
             HashMap<Integer, Animal> animals = this.zookeepers.get(zookeeperKey).getAnimals();
             Set<Integer> animalKeys = animals.keySet();
-            for (int animalKey : animalKeys){
+            for (int animalKey : animalKeys) {
                 Animal foundAnimal = animals.get(animalKey);
-                if (foundAnimal.equals(animal)){
+                if (foundAnimal.equals(animal)) {
                     return this.zookeepers.get(zookeeperKey);
                 }
             }
         }
         return null;
     }
+
+    public boolean checkIfEnclosureExists(Enclosure enclosure) {
+        Set<Integer> enclosureKeys = this.enclosures.keySet();
+
+        for (int enclosureKey : enclosureKeys) {
+            Enclosure returnedEnclosure = this.enclosures.get(enclosureKey);
+            if (returnedEnclosure.equals(enclosure)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkIfZookeeperExists(Zookeeper zookeeper) {
+        Set<Integer> zookeeperKeys = this.zookeepers.keySet();
+
+        for (int zookeeperKey : zookeeperKeys) {
+            Zookeeper returnedZookeeper = this.zookeepers.get(zookeeperKey);
+            if (returnedZookeeper.equals(zookeeper)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     public boolean aMonthPasses() {
         Set<Integer> enclosureKeys = this.enclosures.keySet();

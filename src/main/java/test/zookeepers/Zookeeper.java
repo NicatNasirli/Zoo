@@ -81,4 +81,10 @@ public class Zookeeper {
             animal.setHealth(10);
         }
     }
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+               ", animal count: " + animals.size();
+    }
 }

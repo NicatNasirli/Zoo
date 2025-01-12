@@ -54,5 +54,11 @@ public class Enclosure {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "id: " + id +
+               ", waste: " + waste +
+               ", animal count: " + animals.size();
+    }
 }
 

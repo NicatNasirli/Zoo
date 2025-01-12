@@ -36,8 +36,7 @@ public class Main extends Thread{
 //        MyThread myThread = new MyThread(zoo);
 //        myThread.start();
         Menu menu = new Menu(zoo);
-        menu.printMenu();
-        System.out.println(menu.showAnimals());
+        menu.menu();
     }
 
 }
