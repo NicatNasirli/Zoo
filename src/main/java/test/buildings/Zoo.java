@@ -56,7 +56,7 @@ public class Zoo {
         return null;
     }
 
-    public boolean checkIfEnclosureExists(Enclosure enclosure) {
+    private boolean checkIfEnclosureExistsRoot(Enclosure enclosure) {
         Set<Integer> enclosureKeys = this.enclosures.keySet();
 
         for (int enclosureKey : enclosureKeys) {
@@ -68,7 +68,15 @@ public class Zoo {
         return false;
     }
 
-    public boolean checkIfZookeeperExists(Zookeeper zookeeper) {
+    public boolean checkIfEnclosureExists(Enclosure enclosure) {
+        return checkIfEnclosureExistsRoot(enclosure);
+    }
+
+    public boolean checkIfEnclosureExists(int id) {
+        return checkIfEnclosureExistsRoot(this.enclosures.get(id));
+    }
+
+    private boolean checkIfZookeeperExistsRoot(Zookeeper zookeeper) {
         Set<Integer> zookeeperKeys = this.zookeepers.keySet();
 
         for (int zookeeperKey : zookeeperKeys) {
@@ -80,6 +88,13 @@ public class Zoo {
         return false;
     }
 
+    public boolean checkIfZookeeperExists(Zookeeper zookeeper) {
+        return checkIfZookeeperExistsRoot(zookeeper);
+    }
+
+    public boolean checkIfZookeeperExists(int id) {
+        return checkIfZookeeperExistsRoot(this.zookeepers.get(id));
+    }
 
 
     public boolean aMonthPasses() {
