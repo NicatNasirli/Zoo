@@ -7,7 +7,6 @@ import test.animals.concrates.Gorilla;
 import test.animals.concrates.Lion;
 import test.animals.concrates.Tiger;
 import test.buildings.Enclosure;
-import test.buildings.FoodStore;
 import test.buildings.Zoo;
 import test.zookeepers.PhysioZookeeper;
 import test.zookeepers.PlayZookeeper;
@@ -19,6 +18,7 @@ import java.util.*;
 public class Menu {
 
     private final Zoo zoo;
+    private final FileUtil fileUtil;
 
     private void printMenu() {
         System.out.print("\n \n \n " +
@@ -32,9 +32,8 @@ public class Menu {
                          " 7.Add Zookeeper.\n" +
                          " 8.Feed Animal.\n" +
                          " 9.Add Food.\n" +
-                         " 10.Remove Food.\n" +
-                         " 11.Remove Animal.\n" +
-                         " 12.Exit. " +
+                         " 10.Remove Animal.\n" +
+                         " 11.Exit. " +
                          "\n");
     }
 
@@ -57,10 +56,10 @@ public class Menu {
                     showZookeepers();
                     break;
                 case 4:
-                    addAnimal(input);
+                    showFoodStore();
                     break;
                 case 5:
-                    showFoodStore();
+                    addAnimal(input);
                     break;
                 case 6:
                     addEnclosure(input);
@@ -70,6 +69,12 @@ public class Menu {
                     break;
                 case 8:
                     feedAnimal(input);
+                    break;
+                case 9:
+                    addFood(input);
+                    break;
+                case 10:
+                    removeAnimal(input);
                     break;
                 default:
                     continueTransaction = false;
@@ -195,8 +200,8 @@ public class Menu {
         String type = scanner.next();
         System.out.print("Enter zookeeper id: ");
         int id = scanner.nextInt();
-        if (this.zoo.checkIfEnclosureExists(id)) {
-            throw new CustomException("Enclosure id already exists!");
+        if (this.zoo.checkIfZookeeperExists(id)) {
+            throw new CustomException("Zookeeper id already exists!");
         }
         Zookeeper zookeeper = null;
         switch (type.toLowerCase()) {
@@ -230,5 +235,29 @@ public class Menu {
         Food food = this.zoo.getFoodStore().getFoods().get(foodName).getFood();
         Zookeeper zookeeper = animal.getZookeeper();
         zookeeper.feedAnimal(this.zoo.getFoodStore(), food, animal);
+    }
+
+    private void addFood(Scanner scanner){
+        System.out.print("Enter food name: ");
+        String foodName = scanner.next();
+        if (!this.zoo.getFoodStore().checkIfFoodExists(foodName)){
+            throw new CustomException("Food does not exists!");
+        }
+        System.out.print("Enter quantity: ");
+        int quantity = scanner.nextInt();
+
+        Food food = this.zoo.getFoodStore().getFoods().get(foodName).getFood();
+        this.zoo.getFoodStore().addFood(food, quantity);
+    }
+
+    private void removeAnimal(Scanner scanner){
+        System.out.print("Enter animal id: ");
+        int animalId = scanner.nextInt();
+        Animal animal = this.zoo.findAnimalById(animalId);
+        if (animal == null){
+            throw new CustomException("Animal not found!");
+        }
+        Enclosure enclosure = animal.getEnclosure();
+        enclosure.removeAnimal(animal);
     }
 }

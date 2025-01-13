@@ -4,11 +4,17 @@ import lombok.Getter;
 import test.utils.Food;
 import test.utils.FoodContainer;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Set;
 
 
 @Getter
-public class FoodStore {
+public class FoodStore implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 5L;
+
     private HashMap<String, FoodContainer> foods;
 
     public FoodStore() {
@@ -35,5 +41,23 @@ public class FoodStore {
         if (foodContainer.getSize() <= 0){
             foodContainer.setSize(0);
         }
+    }
+
+    private boolean checkIfFoodExistsRoot(Food food){
+        Set<String> foodKeys = this.foods.keySet();
+        for (String foodKey : foodKeys){
+            if (this.foods.get(foodKey).getFood().getName().equals(food.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkIfFoodExists(Food food){
+        return this.checkIfFoodExistsRoot(food);
+    }
+
+    public boolean checkIfFoodExists(String foodName){
+        return this.checkIfFoodExistsRoot(this.foods.get(foodName).getFood());
     }
 }

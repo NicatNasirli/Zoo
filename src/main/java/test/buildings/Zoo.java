@@ -4,11 +4,16 @@ import lombok.Getter;
 import test.animals.abstracts.Animal;
 import test.zookeepers.Zookeeper;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
 @Getter
-public class Zoo {
+public class Zoo implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final HashMap<Integer, Enclosure> enclosures;
     private final HashMap<Integer, Zookeeper> zookeepers;
     private final FoodStore foodStore;
@@ -39,6 +44,23 @@ public class Zoo {
     public void removeZookeeper(Zookeeper zookeeper) {
         this.zookeepers.remove(zookeeper.getId());
     }
+
+    public Animal findAnimalById(int id){
+        Set<Integer> enclosureKeys = this.enclosures.keySet();
+
+        for (int enclosureKey : enclosureKeys) {
+            HashMap<Integer, Animal> animals = this.enclosures.get(enclosureKey).getAnimals();
+            Set<Integer> animalKeys = animals.keySet();
+            for (int animalKey : animalKeys) {
+                Animal foundAnimal = animals.get(animalKey);
+                if (foundAnimal.getId() == id){
+                    return foundAnimal;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public Zookeeper getAnimalZookeeper(Animal animal) {
         Set<Integer> zookeeperKeys = this.zookeepers.keySet();

@@ -7,11 +7,16 @@ import test.buildings.FoodStore;
 import test.utils.Food;
 import test.zookeepers.Zookeeper;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Data
-public abstract class Animal {
+public abstract class Animal implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 3L;
+
     private int month;
 
     private int id;

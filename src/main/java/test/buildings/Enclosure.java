@@ -5,12 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import test.animals.abstracts.Animal;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Enclosure {
+public class Enclosure implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 2L;
+
     private int id;
     private int waste;
     private HashMap<Integer, Animal> animals;
@@ -49,6 +54,8 @@ public class Enclosure {
     public int getSize(){
         return this.animals.size();
     }
+
+
 
     public boolean aMonthPasses(){
         return false;

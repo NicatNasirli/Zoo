@@ -8,11 +8,16 @@ import test.utils.CustomException;
 import test.utils.Food;
 import test.utils.FoodContainer;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
 @Data
-public class Zookeeper {
+public class Zookeeper implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 4L;
+
     private int id;
 
     private HashMap<Integer, Animal> animals;

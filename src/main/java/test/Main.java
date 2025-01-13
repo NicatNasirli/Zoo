@@ -1,42 +1,36 @@
 package test;
 
-import test.animals.abstracts.Animal;
-import test.animals.concrates.Lion;
-import test.buildings.Enclosure;
-import test.buildings.FoodStore;
 import test.buildings.Zoo;
+import test.utils.FileUtil;
 import test.utils.Food;
 import test.utils.Menu;
-import test.utils.MyThread;
-import test.zookeepers.PhysioZookeeper;
-import test.zookeepers.Zookeeper;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Main extends Thread{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Zoo zoo = new Zoo();
-        FoodStore foodStore = zoo.getFoodStore();
-        Enclosure enclosure1 = new Enclosure(1);
-        Zookeeper zookeeper1 = new PhysioZookeeper(1);
-        Animal lion = new Lion(1,1,'M',10);
-        Animal lion2 = new Lion(2,1,'M',10);
-        zoo.addEnclosure(enclosure1);
-        zoo.getEnclosure(1).addAnimal(lion);
-        zoo.getEnclosure(1).addAnimal(lion2);
-        zoo.addZookeeper(zookeeper1);
-        zookeeper1.assignAnimal(lion);
-        zoo.addZookeeper(zookeeper1);
 
+        // default food types
         Food celery = new Food("Celery", 0,1);
         Food hay = new Food("Hay", 1,4);
-        foodStore.addNewFood(celery);
-        foodStore.addNewFood(hay);
+        Food iceCream = new Food("Ice-Cream", 1,3);
+        Food steak = new Food("Steak", 3,4);
+        zoo.getFoodStore().addNewFood(celery);
+        zoo.getFoodStore().addNewFood(hay);
+        zoo.getFoodStore().addNewFood(iceCream);
+        zoo.getFoodStore().addNewFood(steak);
 
-        foodStore.addFood(celery,10);
+
+        FileUtil fileUtil = new FileUtil();
+        fileUtil.createFile();
+
+        Menu menu = new Menu(zoo, fileUtil);
+        menu.menu();
 
 //        MyThread myThread = new MyThread(zoo);
 //        myThread.start();
-        Menu menu = new Menu(zoo);
-        menu.menu();
     }
 
 }
