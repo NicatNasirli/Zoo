@@ -46,8 +46,10 @@ public class Zookeeper implements Serializable {
         if (ifThereIsFood(foodStore, food)) {
             foodStore.removeFood(food, 1);
             animal.eat(food);
+            animal.getEnclosure().addWaste(food.getWaste());
             return food.getWaste();
-        } else throw new CustomException("No food found!");
+        } else System.out.println("No food found!");
+        return 0;
     }
 
     public void addFoodToEachContainer(FoodStore foodStore) {
@@ -60,7 +62,7 @@ public class Zookeeper implements Serializable {
 
     public void removeWasteFromEnclosure(Enclosure enclosure) {
         if (enclosure.getWaste() >= 1) {
-            enclosure.setWaste(enclosure.getWaste() - 1);
+            enclosure.removeWaste(1);
         }
     }
 

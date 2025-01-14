@@ -1,6 +1,6 @@
 package test.utils;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import test.animals.abstracts.Animal;
 import test.animals.concrates.Chimpanzee;
 import test.animals.concrates.Gorilla;
@@ -12,13 +12,22 @@ import test.zookeepers.PhysioZookeeper;
 import test.zookeepers.PlayZookeeper;
 import test.zookeepers.Zookeeper;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
-@AllArgsConstructor
+@Data
 public class Menu {
 
-    private final Zoo zoo;
     private final FileUtil fileUtil;
+    private final File file;
+    private Zoo zoo;
+
+    public Menu() throws IOException, ClassNotFoundException {
+        this.fileUtil = new FileUtil();
+        this.file = fileUtil.getFile();
+        this.zoo = fileUtil.readObjectFromFile(fileUtil.getFile());
+    }
 
     private void printMenu() {
         System.out.print("\n \n \n " +
@@ -38,43 +47,46 @@ public class Menu {
     }
 
 
-    public void menu() {
+    public void menu() throws IOException, ClassNotFoundException {
+        addFoods(this.zoo);
         Scanner input = new Scanner(System.in);
         boolean continueTransaction = true;
         while (continueTransaction) {
+            Zoo returnedZoo = this.fileUtil.readObjectFromFile(file);
+            this.fileUtil.writeObjectToFile(file, this.zoo);
             printMenu();
             int transaction = input.nextInt();
             switch (transaction) {
                 case 1:
-                    showAnimals();
+                    showAnimals(returnedZoo);
                     break;
 
                 case 2:
-                    showEnclosures();
+                    showEnclosures(returnedZoo);
                     break;
                 case 3:
-                    showZookeepers();
+                    showZookeepers(returnedZoo);
                     break;
                 case 4:
-                    showFoodStore();
+                    showFoodStore(returnedZoo);
                     break;
                 case 5:
-                    addAnimal(input);
+                    addAnimal(input, returnedZoo);
                     break;
                 case 6:
-                    addEnclosure(input);
+                    addEnclosure(input, returnedZoo);
                     break;
                 case 7:
-                    addZookeeper(input);
+                    addZookeeper(input, returnedZoo);
                     break;
                 case 8:
-                    feedAnimal(input);
+                    feedAnimal(input, returnedZoo);
                     break;
                 case 9:
-                    addFood(input);
+                    addFood(input, returnedZoo);
                     break;
                 case 10:
-                    removeAnimal(input);
+                    removeAnimal(input, returnedZoo);
                     break;
                 default:
                     continueTransaction = false;
@@ -82,39 +94,39 @@ public class Menu {
         }
     }
 
-    private void showAnimals() {
-        List<Animal> animalsList = getAnimals();
+    private void showAnimals(Zoo zoo) {
+        List<Animal> animalsList = getAnimals(zoo);
         animalsList.forEach(animal -> System.out.print(animal.toString()));
     }
 
-    private void showEnclosures() {
-        Set<Integer> enclosureKeys = this.zoo.getEnclosures().keySet();
+    private void showEnclosures(Zoo zoo) {
+        Set<Integer> enclosureKeys = zoo.getEnclosures().keySet();
         for (int enclosureKey : enclosureKeys) {
-            System.out.print(this.zoo.getEnclosures().get(enclosureKey).toString());
+            System.out.print(zoo.getEnclosures().get(enclosureKey).toString());
         }
     }
 
-    private void showZookeepers() {
-        Set<Integer> zookeepersKeys = this.zoo.getZookeepers().keySet();
+    private void showZookeepers(Zoo zoo) {
+        Set<Integer> zookeepersKeys = zoo.getZookeepers().keySet();
         for (int zookeepersKey : zookeepersKeys) {
-            System.out.print(this.zoo.getZookeepers().get(zookeepersKey).toString());
+            System.out.print(zoo.getZookeepers().get(zookeepersKey).toString());
         }
     }
 
-    private void showFoodStore() {
-        HashMap<String, FoodContainer> foods = this.zoo.getFoodStore().getFoods();
+    private void showFoodStore(Zoo zoo) {
+        HashMap<String, FoodContainer> foods = zoo.getFoodStore().getFoods();
         Set<String> foodKeys = foods.keySet();
         for (String foodKey : foodKeys) {
             System.out.print(foods.get(foodKey).toString());
         }
     }
 
-    private void addAnimalRoot(Animal animal, Enclosure enclosure, Zookeeper zookeeper) {
-        List<Animal> animals = getAnimals();
-        if (!this.zoo.checkIfEnclosureExists(enclosure)) {
+    private void addAnimalRoot(Animal animal, Enclosure enclosure, Zookeeper zookeeper, Zoo zoo) {
+        List<Animal> animals = getAnimals(zoo);
+        if (!zoo.checkIfEnclosureExists(enclosure)) {
             throw new CustomException("Enclosure not found!");
         }
-        if (!this.zoo.checkIfZookeeperExists(zookeeper)) {
+        if (!zoo.checkIfZookeeperExists(zookeeper)) {
             throw new CustomException("Zookeeper not found!");
         }
         for (Animal animal1 : animals) {
@@ -126,7 +138,7 @@ public class Menu {
         zookeeper.assignAnimal(animal);
     }
 
-    private void addAnimal(Scanner scanner) {
+    private void addAnimal(Scanner scanner, Zoo zoo) {
         System.out.print("Enter enclosure id: ");
         int enclosureId = scanner.nextInt();
         System.out.print("\nEnter zookeeper id: ");
@@ -145,8 +157,8 @@ public class Menu {
         int animalHealth = scanner.nextInt();
 
 
-        Enclosure enclosure = this.zoo.getEnclosure(enclosureId);
-        Zookeeper zookeeper = this.zoo.getZookeepers().get(zookeeperId);
+        Enclosure enclosure = zoo.getEnclosure(enclosureId);
+        Zookeeper zookeeper = zoo.getZookeepers().get(zookeeperId);
 
         Animal animal = null;
         switch (animalType.toLowerCase()) {
@@ -166,12 +178,12 @@ public class Menu {
                 System.out.println("Unknown animal type!");
         }
 
-        this.addAnimalRoot(animal, enclosure, zookeeper);
+        this.addAnimalRoot(animal, enclosure, zookeeper, zoo);
     }
 
-    private List<Animal> getAnimals() {
+    private List<Animal> getAnimals(Zoo zoo) {
         List<Animal> animalsList = new ArrayList<>();
-        HashMap<Integer, Enclosure> enclosures = this.zoo.getEnclosures();
+        HashMap<Integer, Enclosure> enclosures = zoo.getEnclosures();
         Set<Integer> enclosureKeys = enclosures.keySet();
         for (int enclosureKey : enclosureKeys) {
             Enclosure enclosure = enclosures.get(enclosureKey);
@@ -185,22 +197,22 @@ public class Menu {
         return animalsList;
     }
 
-    private void addEnclosure(Scanner scanner) {
+    private void addEnclosure(Scanner scanner, Zoo zoo) {
         System.out.print("Enter enclosure id: ");
         int id = scanner.nextInt();
-        if (this.zoo.checkIfEnclosureExists(id)) {
+        if (zoo.checkIfEnclosureExists(id)) {
             throw new CustomException("Enclosure id already exists!");
         }
-        this.zoo.addEnclosure(new Enclosure(id));
+        zoo.addEnclosure(new Enclosure(id));
     }
 
-    private void addZookeeper(Scanner scanner) {
+    private void addZookeeper(Scanner scanner, Zoo zoo) {
         System.out.print("[play,physio]" +
                          "\nZookeeper type: ");
         String type = scanner.next();
         System.out.print("Enter zookeeper id: ");
         int id = scanner.nextInt();
-        if (this.zoo.checkIfZookeeperExists(id)) {
+        if (zoo.checkIfZookeeperExists(id)) {
             throw new CustomException("Zookeeper id already exists!");
         }
         Zookeeper zookeeper = null;
@@ -214,11 +226,11 @@ public class Menu {
             default:
                 System.out.println("Incorrect zookeeper type");
         }
-        this.zoo.addZookeeper(zookeeper);
+        zoo.addZookeeper(zookeeper);
     }
 
-    private void feedAnimal(Scanner scanner) {
-        List<Animal> animals = this.getAnimals();
+    private void feedAnimal(Scanner scanner, Zoo zoo) {
+        List<Animal> animals = getAnimals(zoo);
         System.out.print("Enter animal id: ");
         int animalId = scanner.nextInt();
         Animal animal = null;
@@ -228,36 +240,49 @@ public class Menu {
             }
         }
         if (animal.equals(null)) {
-            throw new CustomException("Animal not found!");
+            System.out.println("Animal not found!");
         }
         System.out.print("Enter food name: ");
         String foodName = scanner.next();
-        Food food = this.zoo.getFoodStore().getFoods().get(foodName).getFood();
+        Food food = zoo.getFoodStore().getFoods().get(foodName).getFood();
         Zookeeper zookeeper = animal.getZookeeper();
-        zookeeper.feedAnimal(this.zoo.getFoodStore(), food, animal);
+        zookeeper.feedAnimal(zoo.getFoodStore(), food, animal);
     }
 
-    private void addFood(Scanner scanner){
+    private void addFood(Scanner scanner, Zoo zoo) {
         System.out.print("Enter food name: ");
         String foodName = scanner.next();
-        if (!this.zoo.getFoodStore().checkIfFoodExists(foodName)){
+        if (!zoo.getFoodStore().checkIfFoodExists(foodName)) {
             throw new CustomException("Food does not exists!");
         }
         System.out.print("Enter quantity: ");
         int quantity = scanner.nextInt();
 
-        Food food = this.zoo.getFoodStore().getFoods().get(foodName).getFood();
-        this.zoo.getFoodStore().addFood(food, quantity);
+        Food food = zoo.getFoodStore().getFoods().get(foodName).getFood();
+        zoo.getFoodStore().addFood(food, quantity);
     }
 
-    private void removeAnimal(Scanner scanner){
+    private void removeAnimal(Scanner scanner, Zoo zoo) {
         System.out.print("Enter animal id: ");
         int animalId = scanner.nextInt();
-        Animal animal = this.zoo.findAnimalById(animalId);
-        if (animal == null){
+        Animal animal = zoo.findAnimalById(animalId);
+        if (animal == null) {
             throw new CustomException("Animal not found!");
         }
         Enclosure enclosure = animal.getEnclosure();
         enclosure.removeAnimal(animal);
+    }
+
+    private void addFoods(Zoo zoo) {
+        // default food types
+        Food celery = new Food("Celery", 0, 1);
+        Food hay = new Food("Hay", 1, 4);
+        Food iceCream = new Food("Ice-Cream", 1, 3);
+        Food steak = new Food("Steak", 3, 4);
+        zoo.getFoodStore().addNewFood(celery);
+        zoo.getFoodStore().addNewFood(hay);
+        zoo.getFoodStore().addNewFood(iceCream);
+        zoo.getFoodStore().addNewFood(steak);
+
     }
 }

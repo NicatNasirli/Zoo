@@ -46,18 +46,17 @@ public class Enclosure implements Serializable {
 
     public void removeWaste(int waste) {
         this.waste -= waste;
-        if (this.waste <= 0){
+        if (this.waste <= 0) {
             this.waste = 0;
         }
     }
 
-    public int getSize(){
+    public int getSize() {
         return this.animals.size();
     }
 
 
-
-    public boolean aMonthPasses(){
+    public boolean aMonthPasses() {
         return false;
     }
 

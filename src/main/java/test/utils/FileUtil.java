@@ -1,13 +1,19 @@
 package test.utils;
 
+import lombok.Getter;
 import test.buildings.Zoo;
 
 import java.io.*;
 
+@Getter
 public class FileUtil {
+    private final File file;
 
+    public FileUtil() {
+        this.file = createFile();
+    }
 
-    public File createFile() {
+    public static File createFile() {
         try {
             File file = new File("zoo.txt");
             if (file.createNewFile()) {
