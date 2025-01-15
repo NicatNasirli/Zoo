@@ -48,49 +48,49 @@ public class Menu {
 
 
     public void menu() throws IOException, ClassNotFoundException {
-        addFoods(this.zoo);
+//        addFoods(this.zoo);
         Scanner input = new Scanner(System.in);
         boolean continueTransaction = true;
         while (continueTransaction) {
-            Zoo returnedZoo = this.fileUtil.readObjectFromFile(file);
-            this.fileUtil.writeObjectToFile(file, this.zoo);
+            zoo = this.fileUtil.readObjectFromFile(file);
             printMenu();
             int transaction = input.nextInt();
             switch (transaction) {
                 case 1:
-                    showAnimals(returnedZoo);
+                    showAnimals(zoo);
                     break;
 
                 case 2:
-                    showEnclosures(returnedZoo);
+                    showEnclosures(zoo);
                     break;
                 case 3:
-                    showZookeepers(returnedZoo);
+                    showZookeepers(zoo);
                     break;
                 case 4:
-                    showFoodStore(returnedZoo);
+                    showFoodStore(zoo);
                     break;
                 case 5:
-                    addAnimal(input, returnedZoo);
+                    addAnimal(input, zoo);
                     break;
                 case 6:
-                    addEnclosure(input, returnedZoo);
+                    addEnclosure(input, zoo);
                     break;
                 case 7:
-                    addZookeeper(input, returnedZoo);
+                    addZookeeper(input, zoo);
                     break;
                 case 8:
-                    feedAnimal(input, returnedZoo);
+                    feedAnimal(input, zoo);
                     break;
                 case 9:
-                    addFood(input, returnedZoo);
+                    addFood(input, zoo);
                     break;
                 case 10:
-                    removeAnimal(input, returnedZoo);
+                    removeAnimal(input, zoo);
                     break;
                 default:
                     continueTransaction = false;
             }
+            this.fileUtil.writeObjectToFile(file, this.zoo);
         }
     }
 

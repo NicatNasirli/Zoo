@@ -8,14 +8,17 @@ import test.buildings.Zoo;
 @AllArgsConstructor
 public class MyThread extends Thread{
     private final Zoo zoo;
+
+
     @Override
     public void run() {
         while (true){
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            System.out.println("a month passed");
             this.zoo.aMonthPasses();
         }
     }

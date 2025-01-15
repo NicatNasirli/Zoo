@@ -124,10 +124,10 @@ public class Zoo implements Serializable {
 
         for (int enclosureKey : enclosureKeys) {
             Enclosure enclosure = this.enclosures.get(enclosureKey);
-            enclosure.aMonthPasses();
             Set<Integer> animalKeys = enclosure.getAnimals().keySet();
             for (int animalKey : animalKeys) {
                 Animal animal = enclosure.getAnimals().get(animalKey);
+                animal.getZookeeper().aMonthPasses(foodStore, enclosure);
                 animal.aMonthPasses(this.foodStore);
             }
         }
