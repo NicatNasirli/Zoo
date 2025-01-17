@@ -59,6 +59,13 @@ public abstract class Animal implements Serializable {
         return 0;
     }
 
+    public void decreaseHealth(int health){
+        this.setHealth(this.getHealth() - health);
+        if (this.getHealth() <= 0){
+            this.setHealth(0);
+        }
+    }
+
     public void grow(){
         this.setAge(this.getAge() + 1);
     }

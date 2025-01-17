@@ -60,11 +60,17 @@ public class Enclosure implements Serializable {
         return false;
     }
 
+    public boolean ifAnimalIsAlive(Animal animal){
+        int health = animal.getHealth();
+        return health > 0;
+    }
+
     @Override
     public String toString() {
         return "id: " + id +
                ", waste: " + waste +
-               ", animal count: " + animals.size();
+               ", animal count: " + animals.size() +
+               '\n';
     }
 }
 

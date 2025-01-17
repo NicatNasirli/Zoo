@@ -17,16 +17,20 @@ public abstract class Ape extends Animal {
     @Override
     public boolean aMonthPasses(FoodStore foodStore) {
         if (ifAlive()) {
+            Zookeeper zookeeper = this.getZookeeper();
+            Enclosure enclosure = this.getEnclosure();
             Food food = foodStore.getFoods().get("Ice-cream").getFood();
-            int waste = this.getZookeeper().feedAnimal(foodStore, food, this);
-            this.getEnclosure().setWaste(this.getEnclosure().getWaste() + waste);
+
+            int waste = zookeeper.feedAnimal(foodStore, food, this);
+            enclosure.setWaste(enclosure.getWaste() + waste);
             this.setMonth(this.getMonth() + 1);
-            if (this.getMonth() == 12){
+            this.decreaseHealth(1);
+
+            if (this.getMonth() == 12) {
                 this.grow();
                 this.setMonth(0);
             }
             return true;
-
         }
         return false;
     }

@@ -45,7 +45,15 @@ public class Zoo implements Serializable {
         this.zookeepers.remove(zookeeper.getId());
     }
 
-    public Animal findAnimalById(int id){
+    public void removeAnimal(Animal animal) {
+        Enclosure enclosure = animal.getEnclosure();
+        Zookeeper zookeeper = animal.getZookeeper();
+
+        enclosure.removeAnimal(animal);
+        zookeeper.removeAnimal(animal);
+    }
+
+    public Animal findAnimalById(int id) {
         Set<Integer> enclosureKeys = this.enclosures.keySet();
 
         for (int enclosureKey : enclosureKeys) {
@@ -53,7 +61,7 @@ public class Zoo implements Serializable {
             Set<Integer> animalKeys = animals.keySet();
             for (int animalKey : animalKeys) {
                 Animal foundAnimal = animals.get(animalKey);
-                if (foundAnimal.getId() == id){
+                if (foundAnimal.getId() == id) {
                     return foundAnimal;
                 }
             }
@@ -127,8 +135,13 @@ public class Zoo implements Serializable {
             Set<Integer> animalKeys = enclosure.getAnimals().keySet();
             for (int animalKey : animalKeys) {
                 Animal animal = enclosure.getAnimals().get(animalKey);
-                animal.getZookeeper().aMonthPasses(foodStore, enclosure);
-                animal.aMonthPasses(this.foodStore);
+                if (enclosure.ifAnimalIsAlive(animal)) {
+                    animal.getZookeeper().aMonthPasses(this.foodStore, enclosure);
+                    animal.aMonthPasses(this.foodStore);
+                } else {
+                    this.removeAnimal(animal);
+                    System.out.println("Animal with the id " + animal.getId() + " died");
+                }
             }
         }
         return true;

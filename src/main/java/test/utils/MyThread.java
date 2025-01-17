@@ -1,25 +1,32 @@
 package test.utils;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import test.buildings.Zoo;
 
 @Getter
-@AllArgsConstructor
 public class MyThread extends Thread{
+    private volatile boolean running;
     private final Zoo zoo;
 
+    public MyThread(Zoo zoo) {
+        this.zoo = zoo;
+    }
 
     @Override
     public void run() {
-        while (true){
+        running = true;
+        while (running){
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("a month passed");
+            System.out.println("A Month Passed");
             this.zoo.aMonthPasses();
         }
+    }
+
+    public void stopThread(){
+        running = false;
     }
 }

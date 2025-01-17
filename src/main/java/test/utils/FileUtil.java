@@ -13,7 +13,7 @@ public class FileUtil {
         this.file = createFile();
     }
 
-    public static File createFile() {
+    public File createFile() {
         try {
             File file = new File("zoo.txt");
             if (file.createNewFile()) {
@@ -35,7 +35,7 @@ public class FileUtil {
     }
 
     public Zoo readObjectFromFile(File file) throws IOException, ClassNotFoundException {
-        Zoo zoo = null;
+        Zoo zoo;
         try (FileInputStream fis = new FileInputStream(file);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             zoo = (Zoo) ois.readObject();

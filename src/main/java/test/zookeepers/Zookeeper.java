@@ -83,8 +83,8 @@ public class Zookeeper implements Serializable {
         return true;
     }
 
-    public void setMaxHealth(Animal animal){
-        if (animal.getHealth() >= 10){
+    public void setMaxHealth(Animal animal) {
+        if (animal.getHealth() >= 10) {
             animal.setHealth(10);
         }
     }
@@ -92,6 +92,7 @@ public class Zookeeper implements Serializable {
     @Override
     public String toString() {
         return "id: " + id +
-               ", animal count: " + animals.size();
+               ", animal count: " + animals.size() +
+               '\n';
     }
 }
